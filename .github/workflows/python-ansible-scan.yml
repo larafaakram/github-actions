@@ -1,4 +1,4 @@
-name: Ansible & Python Lint & security checker for Push and Pull Events
+name: Ansible & Python Lint & security checker for Push and Pull Events 2
 
 on:
   push:
