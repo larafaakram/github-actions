@@ -12,25 +12,25 @@ jobs:
       - self-hosted
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
-      with:
-        token: ${{ github.token }}
-        fetch-depth: 0
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ github.token }}
+          fetch-depth: 0
 
-    - name: Get Modified Files for Pull Request Event
-      id: get-changed-files-pull
-      if: github.event_name == 'pull_request'
-      run: |
-        git fetch origin
-        if [ -n "${{ github.event.pull_request.base.sha }}" ]; then
-          CHANGED_FILES=$(git diff --diff-filter=AM --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}")
-          echo "Changed files: $CHANGED_FILES"
-          CHANGED_FILES_STR=$(echo "$CHANGED_FILES" | tr '\n' ' ')
-          echo "CHANGED_FILES_STR=$CHANGED_FILES_STR" >> $GITHUB_ENV
-        else
-          echo "No previous commit available. Skipping linting step."
-        fi
+      - name: Get Modified Files for Pull Request Event
+        id: get-changed-files-pull
+        if: github.event_name == 'pull_request'
+        run: |
+          git fetch origin
+          if [ -n "${{ github.event.pull_request.base.sha }}" ]; then
+            CHANGED_FILES=$(git diff --diff-filter=AM --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}")
+            echo "Changed files: $CHANGED_FILES"
+            CHANGED_FILES_STR=$(echo "$CHANGED_FILES" | tr '\n' ' ')
+            echo "CHANGED_FILES_STR=$CHANGED_FILES_STR" >> $GITHUB_ENV
+          else
+            echo "No previous commit available. Skipping linting step."
+          fi
 
     - name: Get Modified Files for Push Event
       id: get-changed-files      
