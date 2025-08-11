@@ -29,7 +29,7 @@ jobs:
           else
             echo "No previous commit available. Skipping linting step."
           fi
-  
+
       - name: Get Modified Files for Push Event
         id: get-changed-files
         run: |
